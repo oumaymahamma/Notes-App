@@ -6,14 +6,13 @@ import {
   pgTable,
   serial,
   timestamp,
-  bigint,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  email: text("email").notNull(),
-  clerkId: text("clerkId").notNull(),
+  email: text("email").notNull().unique(),
+  clerkId: text("clerkId").notNull().unique(),
   firstName: text("firstName").notNull(),
   lastName: text("lastName").notNull(),
   photo: text("photo").notNull(),
@@ -22,7 +21,7 @@ export const users = pgTable("users", {
 });
 
 export const todos = pgTable("todos", {
-  id: bigint("id", { mode: "number" }).primaryKey(),
+  id: serial("id").primaryKey(),
   text: text("text").notNull(),
   done: boolean("done").default(false).notNull(),
   userId: integer("user_id")
